@@ -2,27 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=`, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        [v-cloak] {
+            display:none;
+        }
+    </style>
     <title>Document</title>
 </head>
 <body>
     <div id="app">
 
         <div class="container">
+            <img  :src="imgSrc" :title="imgTitle" >
+            <h1 v-cloak >{{imgTitle}}</h1>
 
         </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-    <script>
-        import apiKey from "/apiKeys"
-        var url ='GET https://api.nasa.gov/planetary/apod?api_key=' + apiKey;
-        var vm = new Vue({
-            el:'#app', 
-                data: {
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module">
+        import apiKey from "./apiKeys.js";
+        
+       
+        var myApi = apiKey.nasaApiKey
+        var url ='https://api.nasa.gov/planetary/apod?api_key=' + myApi;
+        
+        var vm = new Vue ({
+            el: '#app',
+            data: {
+                imgSrc: '',
+                imgTitle: ''
+            },
+            created: function () {
+                this.fetchApod();
+            },
+            methods: {
+                fetchApod: function() {
+                    var myApi = apiKey.nasaApiKey
+                    var url ='https://api.nasa.gov/planetary/apod?api_key=' + myApi;
+                    axios.get(url).then(function (res) {
+                        vm.imgSrc = res.data.url;
+                        vm.imgTitle = res.data.title;
+        
+                        });
+                    }
+            }
+        });
 
-                }
-            });
+            
     </script>
 </body>
 </html>
