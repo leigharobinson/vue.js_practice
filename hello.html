@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        [v-cloak] {
+            display:none;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>{{greeting}}</h1>
+            <form v-if="!submitted" class="mt-5">
+                <div class="form-group">
+                    <label type="email">Email</label>
+                    <input type="email" v-model:value="email" class="form-control form-control=lg" >
+                </div>
+                <button v-on:click.prevent="process" type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <h2 v-else v-cloak class="mt-5">Thanks for signing up!</h2>
+            <button  v-cloak v-if="submitted" v-on:click.prevent="process2" type="submit" class="btn btn-secondary">Submit Another Email</button>
+        </div>   
+        <hr/>
+        <div class="container">
+           
+            <form v-show="!submitted" class="mt-5">
+                <div class="form-group">
+                    <label type="email">Email</label>
+                    <input type="email" v-model:value="email" class="form-control form-control=lg" >
+                </div>
+                <button  v-on:click.prevent="process" type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <h2 v-show="submitted" v-cloak class="mt-5">Thanks for signing up!</h2>
+            <button v-cloak v-show="submitted" v-on:click.prevent="process2" type="submit" class="btn btn-secondary">Submit Another Email</button>
+        </div>     
+
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script>
+           var vm = new Vue({
+                el: "#app",
+                data: {
+                    greeting: 'Hello from Vue!',
+                    email: 'mke@example.com',
+                    submitted: false
+                },
+                methods: {
+                    process: function() { 
+                        this.submitted = true;
+                     },
+                    process2: function () {
+                        this.submitted = false;
+                    }
+                }
+            });
+        </script>
+</body>
+</html>
