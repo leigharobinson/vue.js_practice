@@ -24,10 +24,10 @@
                         <th>Name</th>
                         <th>Close Approach Date</th>
                     </thead>
-                    <tbody>
-                        <tr v-for="a in asteroids">
+                    <tbody >
+                        <tr v-cloak v-for="a in asteroids">
                             <td>{{a.name}}</td>
-                            <td>{{a.close_approach_data.length}}</td>
+                            <td>{{getCloseApproachDate(a)}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -70,7 +70,12 @@
                         axios.get(url).then(function (res) {
                             vm.asteroids = res.data.near_earth_objects.slice(0,10);
                             });
+                        },
+                    getCloseApproachDate: function (a) {
+                        if (a.close_approach_data.length > 0){
+                            return a.close_approach_data[0].close_approach_date
                         }
+                    }
             }
         });
 
